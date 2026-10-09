@@ -1,0 +1,28 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Project BreakPoint"
+run/main_scene="uid://bj30vmg7uy53s"
+config/features=PackedStringArray("4.4", "Mobile")
+config/icon="res://icon.svg"
+
+[layer_names]
+
+3d_physics/layer_1="world"
+3d_physics/layer_2="player"
+3d_physics/layer_3="enemy"
+3d_physics/layer_4="player_attack"
+3d_physics/layer_5="enemy_attack"
+
+[rendering]
+
+renderer/rendering_method="mobile"
