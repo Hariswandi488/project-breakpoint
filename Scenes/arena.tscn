@@ -1,4 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmvo1sir8r0cm"]
+[gd_scene load_steps=10 format=3 uid="uid://bmvo1sir8r0cm"]
+
+[ext_resource type="Texture2D" uid="uid://bye1ltug0euno" path="res://Assets/Textures/floor_placeholder_textures.jpg" id="1_lq7nq"]
+[ext_resource type="PackedScene" uid="uid://j30602dci2ek" path="res://Scenes/wall.tscn" id="2_ra5jo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jdqfs"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -13,17 +16,51 @@ sky = SubResource("Sky_lq7nq")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jdqfs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ra5jo"]
+albedo_texture = ExtResource("1_lq7nq")
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_nnts3"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_jdqfs"]
+size = Vector3(54.7763, 0.0805216, 46.7722)
+
 [node name="Arena" type="Node3D"]
+transform = Transform3D(2.72056, 0, 0, 0, 1.30074, 0, 0, 0, 3.15013, 0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 15.6424, 0)
+transform = Transform3D(-0.305577, -0.19826, 0.0492365, 0, 0.185296, 0.746129, -0.176425, 0.256127, -0.0636074, -0.0834616, 18.3026, 0.00694791)
 shadow_enabled = true
+shadow_normal_bias = 0.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ra5jo")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(27.9919, 0, 0, 0, 1.50714, 0, 0, 0, 23.4372, 0, 0, 0)
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+
+[node name="wall" parent="CSGCombiner3D" instance=ExtResource("2_ra5jo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.08348, 3.24449, -5.16951)
+
+[node name="wall2" parent="CSGCombiner3D" instance=ExtResource("2_ra5jo")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.9061, 1.85426, -4.23895)
+
+[node name="wall3" parent="CSGCombiner3D" instance=ExtResource("2_ra5jo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1029, 2.90163, -6.73961)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_jdqfs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(27.9919, 0, 0, 0, 0.76008, 0, 0, 0, 23.4372, 5.47724e-09, -8.59193e-09, -1.89213e-08)
+material_override = SubResource("StandardMaterial3D_ra5jo")
+lod_bias = 0.001
 mesh = SubResource("PlaneMesh_nnts3")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0814743, -0.0468325, -0.161911)
+shape = SubResource("BoxShape3D_jdqfs")
+debug_color = Color(0, 0.34902, 0.701961, 0.729412)

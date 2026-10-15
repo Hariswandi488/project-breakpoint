@@ -6,6 +6,7 @@
 [node name="main" type="Node3D"]
 
 [node name="Arena" parent="." instance=ExtResource("1_bo1nx")]
+transform = Transform3D(2.72056, 0, 0, 0, 1.30074, 0, 0, 0, 3.15013, 0.129707, -0.381517, 0.204414)
 
 [node name="player" parent="." instance=ExtResource("2_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98573, 2, 6.00386)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98573, 1.8782, 6.00386)
