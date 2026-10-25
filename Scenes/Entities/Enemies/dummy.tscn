@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8r0c7475rc6d"]
+
+[ext_resource type="Script" uid="uid://buqbvlmwcf4vg" path="res://Scripts/Entities/Enemies/dummy.gd" id="1_740vn"]
+[ext_resource type="Script" uid="uid://cdndhfx0jvmot" path="res://Scripts/Entities/Component/health_component.gd" id="1_vxsqc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_740vn"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vtj64"]
+
+[node name="Dummy" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("1_740vn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_740vn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_vtj64")
+
+[node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("1_vxsqc")
+parent = NodePath("..")
+metadata/_custom_type_script = "uid://cdndhfx0jvmot"

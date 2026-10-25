@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://bj30vmg7uy53s"]
+[gd_scene load_steps=4 format=3 uid="uid://bj30vmg7uy53s"]
 
 [ext_resource type="PackedScene" uid="uid://bmvo1sir8r0cm" path="res://Scenes/arena.tscn" id="1_bo1nx"]
-[ext_resource type="PackedScene" uid="uid://dew1wtx273lmu" path="res://Scenes/player.tscn" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://dew1wtx273lmu" path="res://Scenes/Entities/Player/player.tscn" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://b8r0c7475rc6d" path="res://Scenes/Entities/Enemies/dummy.tscn" id="3_8gbba"]
 
-[node name="main" type="Node3D"]
+[node name="Main" type="Node3D"]
 
 [node name="Arena" parent="." instance=ExtResource("1_bo1nx")]
 transform = Transform3D(2.72056, 0, 0, 0, 1.30074, 0, 0, 0, 3.15013, 0.129707, -0.381517, 0.204414)
 
 [node name="player" parent="." instance=ExtResource("2_8gbba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98573, 1.8782, 6.00386)
+
+[node name="Dummy" parent="." instance=ExtResource("3_8gbba")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3241, 0.609935, 2.49554)

@@ -1,0 +1,81 @@
+[gd_scene load_steps=9 format=3 uid="uid://dew1wtx273lmu"]
+
+[ext_resource type="Script" uid="uid://dwxqx4bctnder" path="res://Scripts/Entities/Player/player.gd" id="1_v0iea"]
+[ext_resource type="PackedScene" uid="uid://ckxddworg1tw" path="res://Scenes/Entities/health_component.tscn" id="2_6t5aa"]
+[ext_resource type="PackedScene" uid="uid://bxskfb4x5bfw7" path="res://Scenes/Entities/state.tscn" id="3_vgqql"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6t5aa"]
+size = Vector3(1.8049, 1.37695, 0.609375)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0iea"]
+radius = 0.428623
+height = 1.85304
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cvnsp"]
+margin = 0.0
+radius = 0.001
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t5aa"]
+radius = 0.475465
+height = 1.83318
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_v0iea")
+attack_deceleration = 30.0
+dead_deceleration = 30.0
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0118825, 2.38419e-07, 0.0117793)
+layers = 2
+mesh = SubResource("CapsuleMesh_f60y1")
+
+[node name="HitBox" type="Area3D" parent="Visual"]
+collision_layer = 8
+collision_mask = 4
+monitoring = false
+
+[node name="HitboxShape" type="CollisionShape3D" parent="Visual/HitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+shape = SubResource("BoxShape3D_6t5aa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00234127, 2.38419e-07, -0.0254774)
+shape = SubResource("CapsuleShape3D_v0iea")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+shape = SubResource("CapsuleShape3D_cvnsp")
+spring_length = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+fov = 94.7465
+near = 0.001
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 16
+
+[node name="HurtboxShape" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape3D_6t5aa")
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("parent") instance=ExtResource("2_6t5aa")]
+parent = NodePath("..")
+
+[node name="State" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_vgqql")]
+health_component = NodePath("../HealthComponent")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[connection signal="body_entered" from="Visual/HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
