@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://dmrvmr0lnobaa"]
+
+[ext_resource type="Script" uid="uid://buj1qhhojcm74" path="res://Scripts/Entities/Enemies/soldier.gd" id="1_7hcct"]
+[ext_resource type="Script" uid="uid://cdndhfx0jvmot" path="res://Scripts/Entities/Component/health_component.gd" id="2_e57cs"]
+[ext_resource type="Script" uid="uid://b1i660wsqhhl6" path="res://Scripts/state.gd" id="2_tsarg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e57cs"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tsarg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xaig1"]
+size = Vector3(1.41217, 1.20619, 0.772461)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e57cs"]
+
+[node name="Soldier" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 9
+script = ExtResource("1_7hcct")
+chase_speed = 5.0
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
+material_override = SubResource("StandardMaterial3D_e57cs")
+mesh = SubResource("CapsuleMesh_tsarg")
+
+[node name="Hitbox" type="Area3D" parent="Visual"]
+collision_layer = 16
+collision_mask = 2
+
+[node name="HitboxShape" type="CollisionShape3D" parent="Visual/Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00576782, 0.0830002, 0.88623)
+shape = SubResource("BoxShape3D_xaig1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_e57cs")
+
+[node name="State" type="Node" parent="." node_paths=PackedStringArray("health_component")]
+script = ExtResource("2_tsarg")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://b1i660wsqhhl6"
+
+[node name="HealthComponent" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("2_e57cs")
+parent = NodePath("..")
+max_health = 100
+metadata/_custom_type_script = "uid://cdndhfx0jvmot"
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="TimerAttack" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[connection signal="body_entered" from="Visual/Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="TimerAttack" to="." method="_on_timer_attack_timeout"]

@@ -7,7 +7,7 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6t5aa"]
-size = Vector3(1.8049, 1.37695, 0.609375)
+size = Vector3(1.8049, 1.37695, 1.2207)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0iea"]
 radius = 0.428623
@@ -23,6 +23,7 @@ height = 1.83318
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
+collision_mask = 17
 script = ExtResource("1_v0iea")
 attack_deceleration = 30.0
 dead_deceleration = 30.0
@@ -40,7 +41,7 @@ collision_mask = 4
 monitoring = false
 
 [node name="HitboxShape" type="CollisionShape3D" parent="Visual/HitBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.30566)
 shape = SubResource("BoxShape3D_6t5aa")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -74,7 +75,7 @@ health_component = NodePath("../HealthComponent")
 one_shot = true
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.6
+wait_time = 0.3
 one_shot = true
 
 [connection signal="body_entered" from="Visual/HitBox" to="." method="_on_hit_box_body_entered"]

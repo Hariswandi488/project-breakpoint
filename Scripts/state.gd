@@ -1,7 +1,7 @@
 class_name State
 extends Node
 
-enum STATE {IDLE, MOVE, JUMP, ATTACK, HURT, DEAD}
+enum STATE {IDLE, MOVE, JUMP, CHASE, ATTACK, HURT, DEAD}
 var state:STATE = STATE.IDLE
 
 # Aturan

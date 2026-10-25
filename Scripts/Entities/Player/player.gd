@@ -19,14 +19,16 @@ extends CharacterBody3D
 @onready var hitbox_shape: CollisionShape3D = $Visual/HitBox/HitboxShape
 @onready var attack_cooldown: Timer = $AttackCooldown
 @onready var attack_timer: Timer = $AttackTimer
+@onready var health: HealthComponent = $HealthComponent
 
 var already_hits: Array[Node3D] = []
 var camera_vertical:float = 0.0
 
 func _ready() -> void:
-	add_to_group("PLAYER")
+	add_to_group("Player")
 	hitbox_shape.disabled = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	health.health_changed.connect(func(c,m): print("HP",c,"/",m))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if state.state == state.STATE.DEAD:
