@@ -8,7 +8,7 @@ func _ready() -> void:
 	health.health_changed.connect(_on_health_changed)
 
 
-func _on_health_changed(current:int, maximum:int) -> void:
+func _on_health_changed(_current:int, _maximum:int) -> void:
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = Color.RED
 	mesh.material_override = mat

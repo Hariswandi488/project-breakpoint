@@ -10,15 +10,16 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tsarg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xaig1"]
-size = Vector3(1.41217, 1.20619, 0.772461)
+size = Vector3(1.41217, 1.20619, 0.93689)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e57cs"]
 
 [node name="Soldier" type="CharacterBody3D"]
 collision_layer = 4
-collision_mask = 9
+collision_mask = 13
 script = ExtResource("1_7hcct")
 chase_speed = 5.0
+damage = 25
 
 [node name="Visual" type="Node3D" parent="."]
 
@@ -31,7 +32,7 @@ collision_layer = 16
 collision_mask = 2
 
 [node name="HitboxShape" type="CollisionShape3D" parent="Visual/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00576782, 0.0830002, 0.88623)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00576782, 0.0830002, 0.968444)
 shape = SubResource("BoxShape3D_xaig1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

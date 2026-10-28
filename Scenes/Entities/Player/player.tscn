@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://dew1wtx273lmu"]
 
 [ext_resource type="Script" uid="uid://dwxqx4bctnder" path="res://Scripts/Entities/Player/player.gd" id="1_v0iea"]
-[ext_resource type="PackedScene" uid="uid://ckxddworg1tw" path="res://Scenes/Entities/health_component.tscn" id="2_6t5aa"]
-[ext_resource type="PackedScene" uid="uid://bxskfb4x5bfw7" path="res://Scenes/Entities/state.tscn" id="3_vgqql"]
+[ext_resource type="PackedScene" uid="uid://ckxddworg1tw" path="res://Scenes/Entities/Component/health_component.tscn" id="2_6t5aa"]
+[ext_resource type="PackedScene" uid="uid://bxskfb4x5bfw7" path="res://Scenes/Entities/Component/state.tscn" id="3_vgqql"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_f60y1"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rx582"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6t5aa"]
 size = Vector3(1.8049, 1.37695, 1.2207)
@@ -27,13 +27,14 @@ collision_mask = 17
 script = ExtResource("1_v0iea")
 attack_deceleration = 30.0
 dead_deceleration = 30.0
+move_accleration = 30.0
 
 [node name="Visual" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0118825, 2.38419e-07, 0.0117793)
 layers = 2
-mesh = SubResource("CapsuleMesh_f60y1")
+mesh = SubResource("CapsuleMesh_rx582")
 
 [node name="HitBox" type="Area3D" parent="Visual"]
 collision_layer = 8

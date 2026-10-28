@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfmrgk7rpyjlc"]
+
+[ext_resource type="Script" uid="uid://dk8js13s0ub57" path="res://Scripts/UI/hud.gd" id="1_sprlj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny26j"]
+bg_color = Color(0.187176, 0.187176, 0.187176, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdl0h"]
+bg_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_8glcj"]
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_sprlj")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = 20.0
+offset_top = 25.0
+offset_right = 245.0
+offset_bottom = 55.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ny26j")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fdl0h")
+show_percentage = false
+
+[node name="Label" type="Label" parent="ProgressBar"]
+layout_mode = 0
+offset_right = 222.0
+offset_bottom = 28.0
+text = "HP x/y"
+label_settings = SubResource("LabelSettings_8glcj")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -11,6 +11,7 @@ var current_health:int
 
 func _ready() -> void:
 	current_health = max_health
+	health_changed.emit(current_health, max_health)
 
 func take_damage(dmg:int):
 	if current_health <= 0:

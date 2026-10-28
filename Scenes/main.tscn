@@ -1,20 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj30vmg7uy53s"]
+[gd_scene load_steps=8 format=3 uid="uid://bj30vmg7uy53s"]
 
 [ext_resource type="PackedScene" uid="uid://bmvo1sir8r0cm" path="res://Scenes/arena.tscn" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://dew1wtx273lmu" path="res://Scenes/Entities/Player/player.tscn" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://b4pas3lban74q" path="res://Scenes/UI/end_screen.tscn" id="3_6bp64"]
 [ext_resource type="PackedScene" uid="uid://b8r0c7475rc6d" path="res://Scenes/Entities/Enemies/dummy.tscn" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://dmrvmr0lnobaa" path="res://Scenes/Entities/Enemies/soldier.tscn" id="4_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://do0tj1xn46hkh" path="res://Scenes/Game/game_manager.tscn" id="5_21xkr"]
+[ext_resource type="PackedScene" uid="uid://dfmrgk7rpyjlc" path="res://Scenes/UI/hud.tscn" id="5_kry3j"]
 
 [node name="Main" type="Node3D"]
-
-[node name="Arena" parent="." instance=ExtResource("1_bo1nx")]
-transform = Transform3D(2.72056, 0, 0, 0, 1.30074, 0, 0, 0, 3.15013, 0.129707, -0.381517, 0.204414)
 
 [node name="player" parent="." instance=ExtResource("2_8gbba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98573, 1.8782, 6.00386)
 
+[node name="Arena" parent="." instance=ExtResource("1_bo1nx")]
+transform = Transform3D(2.72056, 0, 0, 0, 1.30074, 0, 0, 0, 3.15013, 0.129707, -0.381517, 0.204414)
+
 [node name="Dummy" parent="." instance=ExtResource("3_8gbba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.3241, 0.609935, 2.49554)
 
-[node name="Soldier" parent="." instance=ExtResource("4_jjvhh")]
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="Soldier" parent="Enemies" instance=ExtResource("4_jjvhh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6283, 0.609935, 17.356)
+
+[node name="Soldier2" parent="Enemies" instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.6022, 0.609936, 9.41869)
+
+[node name="Soldier3" parent="Enemies" instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4801, 0.609936, 12.7845)
+
+[node name="GameManager" parent="." instance=ExtResource("5_21xkr")]
+
+[node name="UI" type="Node" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("5_kry3j")]
+
+[node name="EndScreen" parent="UI" instance=ExtResource("3_6bp64")]

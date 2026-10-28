@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var mouse_sensivitity:float = 0.003
 @export var attack_deceleration: float = 15.0
 @export var dead_deceleration: float = 15.0
+@export var move_accleration:float = 15.0
 
 @export_group("Combat")
 @export var damage: int = 50
@@ -28,7 +29,7 @@ func _ready() -> void:
 	add_to_group("Player")
 	hitbox_shape.disabled = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	health.health_changed.connect(func(c,m): print("HP",c,"/",m))
+	health.died.connect(_on_died)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if state.state == state.STATE.DEAD:
@@ -67,20 +68,11 @@ func handle_movement(delta: float):
 		velocity += get_gravity() * delta
 	
 	if state.state == state.STATE.ATTACK:
-		velocity.x = move_toward(
-			velocity.x, 0.0, attack_deceleration * delta
-		)
-		velocity.z = move_toward(
-			velocity.z, 0.0, attack_deceleration * delta
-		)
-	
+		velocity.x = move_toward(velocity.x, 0.0, attack_deceleration * delta)
+		velocity.z = move_toward(velocity.z, 0.0, attack_deceleration * delta)
 	elif state.state == state.STATE.DEAD:
-		velocity.x = move_toward(
-			velocity.x, 0.0, dead_deceleration * delta
-		)
-		velocity.z = move_toward(
-			velocity.z, 0.0, dead_deceleration * delta
-		)
+		velocity.x = move_toward(velocity.x, 0.0, dead_deceleration * delta)
+		velocity.z = move_toward(velocity.z, 0.0, dead_deceleration * delta)
 	else:
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			velocity.y = jump_velocity
@@ -91,8 +83,8 @@ func handle_movement(delta: float):
 		direction = direction.normalized()
 		
 		var speed := sprint_speed if Input.is_action_pressed("sprint") else walk_speed
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+		velocity.x = move_toward(velocity.x, direction.x * speed, move_accleration * delta)
+		velocity.z = move_toward(velocity.z, direction.z * speed, move_accleration * delta)
 		
 		if direction.length() > 0.1: 
 			var target_angel := atan2(direction.x, direction.z)
@@ -129,8 +121,15 @@ func _on_hit_box_body_entered(body: Node3D) -> void:
 		body.get_node("HealthComponent").take_damage(damage)
 
 func _on_attack_timer_timeout() -> void:
+	if state.state == state.STATE.DEAD:
+		return
 	attack_cooldown.start()
 	hitbox_shape.disabled = true
 	hit_box.monitoring = false
 	state.state = state.STATE.IDLE
 	
+
+func _on_died():
+	attack_cooldown.stop()
+	attack_timer.stop()
+	hit_box.set_deferred("monitoring", false)

@@ -16,8 +16,6 @@ extends CharacterBody3D
 var player:CharacterBody3D
 var already_hits:Array[Node3D] = []
 
-
-
 func _ready() -> void:
 	hitbox_shape.disabled = true
 	add_to_group("Enemy")
@@ -55,7 +53,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				velocity.x = 0
 				velocity.z = 0
-				if attack_cooldown.is_stopped():
+				if attack_cooldown.is_stopped() and player.state.state != player.state.STATE.DEAD:
 					start_attack()
 		state.STATE.ATTACK:
 			velocity.x = 0
